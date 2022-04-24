@@ -18,7 +18,6 @@
     mkNixOS = modules:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = attrs // {inherit system;};
         inherit modules;
       };
   in {
