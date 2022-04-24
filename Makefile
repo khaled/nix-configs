@@ -2,13 +2,13 @@ all:
 	$(error Run make machine or make user)
 
 machine:
-	nixos-rebuild switch --use-remote-sudo --flake ./nixos#$(filter-out $@,$(MAKECMDGOALS))
+	nixos-rebuild switch --use-remote-sudo --flake .#$(filter-out $@,$(MAKECMDGOALS))
 
 vm:
-	nixos-rebuild build-vm --flake ./nixos#vm
+	nixos-rebuild build-vm --flake .#vm
 
 user:
-	home-manager switch --flake ./home/#doos
+	home-manager switch --flake .#doos
 
 watch-user:
 	watchexec -w home -e nix "make user"
