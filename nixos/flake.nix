@@ -1,32 +1,25 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
-  inputs.home-manager = {
-    url = github:nix-community/home-manager;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-  inputs.nur.url = "github:nix-community/NUR";
-
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   outputs = {
     self,
     nixpkgs,
-    home-manager,
-    nur,
     ...
   } @ attrs: {
-    nixosConfigurations.n2 = nixpkgs.lib.nixosSystem rec {
-      system = "x86_64-linux";
-      specialArgs = attrs // {inherit system;};
-      modules = [
-        {nixpkgs.overlays = [nur.overlay];}
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          # Optionally, use home-manager.extraSpecialArgs to pass
-          # arguments to home.nix
-        }
-      ];
+    nixosConfigurations = {
+      n2 = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = attrs // {inherit system;};
+        modules = [
+          ./n2.nix
+        ];
+      };
+      vm = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = attrs // {inherit system;};
+        modules = [
+          ./vm.nix
+        ];
+      };
     };
   };
 }

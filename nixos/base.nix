@@ -5,8 +5,6 @@
   ...
 }: {
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
   ];
 
   nix = {
@@ -24,20 +22,12 @@
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
 
-  services.fstrim.enable = true;
-
-  networking.hostName = "n2"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   time.timeZone = "America/New_York";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  # networking.interfaces.enp13s0.useDHCP = true;  # must have been autodiscovered; seems to cause boot delay
-  networking.interfaces.wlp0s20f3.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -98,6 +88,7 @@
       "video" # For brightnessctl presumably
     ];
     shell = pkgs.zsh;
+    hashedPassword = "$6$F4ewi6AYMN5yyvSu$mnzrpR2RRsgbNQkHwZINfmVCFlz2A1XOjKIIGcuxQC7AKiKx/Oi5MGi9/AYa1XR1Gmgz9pNvO.v8G9o4MDTCs0";
   };
 
   environment.sessionVariables = {
@@ -110,12 +101,14 @@
     wget
     watchexec
     git
+    gparted
     gnumake
 
     # utils
     brightnessctl
     gnome3.gnome-tweaks
     home-manager
+    qemu
   ];
 
   #environment.loginShellInit = ''

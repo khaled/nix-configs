@@ -18,6 +18,7 @@
     };
     shellAliases = {
       kc = "kubectl";
+      code = "codium";
     };
     history = {
       size = 1000000;
@@ -64,7 +65,7 @@
   home.packages = with pkgs; [
     # utils
     alacritty
-    barrier
+    # barrier
     htop
     neofetch
     peco
@@ -84,6 +85,7 @@
 
     # apps
     feh
+    foliate
     freecad
     koreader
     keepassxc
