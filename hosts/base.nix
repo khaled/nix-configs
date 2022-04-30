@@ -69,6 +69,7 @@
     git
     gparted
     gnumake
+    tree
 
     # utils
     brightnessctl
