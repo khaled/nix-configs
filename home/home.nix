@@ -16,9 +16,11 @@
       plugins = ["git"];
       theme = "avit";
     };
+    profileExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     shellAliases = {
       kc = "kubectl";
       code = "codium";
+      pe = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     };
     history = {
       size = 1000000;
@@ -65,8 +67,10 @@
   home.packages = with pkgs; [
     # utils
     alacritty
+    delta
     # barrier
     htop
+    killall
     neofetch
     peco
     rclone
@@ -84,15 +88,18 @@
     rnix-lsp
 
     # apps
+    bespokesynth
     feh
     foliate
-    freecad
-    koreader
     keepassxc
+    koreader
     lazarus
+    libreoffice
+    quiterss
     obsidian # unfree
     obs-studio
     signal-desktop
+    thunderbird
     vlc
   ];
 }

@@ -4,34 +4,13 @@
   nixpkgs,
   ...
 }: {
-  imports = [
-  ];
-
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
 
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.devices = ["nodev"];
-  boot.loader.grub.efiInstallAsRemovable = false;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
-
   time.timeZone = "America/New_York";
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -40,31 +19,6 @@
   #   keyMap = "us";
   # };
 
-  services.xserver = {
-    enable = true;
-  };
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.gnome = {
-    chrome-gnome-shell.enable = true; # see https://nix-community.github.io/home-manager/options.html#opt-programs.firefox.enableGnomeExtensions
-    sushi.enable = true;
-  };
-  services.synergy = {
-    client = {
-      enable = true;
-      autoStart = true;
-      serverAddress = "n2";
-    };
-    server = {
-      enable = true;
-      autoStart = true;
-      address = "0.0.0.0:24800";
-      configFile = "/home/doos/.config/synergy-server/config.conf";
-    };
-  };
-
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
@@ -72,27 +26,39 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
+  # Sound config
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  services.pipewire.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
-  programs.zsh.enable = true;
+  services.xserver = {
+    enable = true;
+  };
+
+  # Configure keymap in X11
+  # services.xserver.layout = "us";
+  # services.xserver.xkbOptions = "eurosign:e";
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
   users.users.doos = {
     isNormalUser = true;
     extraGroups = [
       "wheel" # Enable sudo
       "video" # For brightnessctl presumably
+      # "networkmanager"
     ];
     shell = pkgs.zsh;
     hashedPassword = "$6$F4ewi6AYMN5yyvSu$mnzrpR2RRsgbNQkHwZINfmVCFlz2A1XOjKIIGcuxQC7AKiKx/Oi5MGi9/AYa1XR1Gmgz9pNvO.v8G9o4MDTCs0";
-  };
-
-  environment.sessionVariables = {
-    MOZ_USE_XINPUT2 = "1"; # for firefox
   };
 
   environment.systemPackages = with pkgs; [
@@ -106,16 +72,9 @@
 
     # utils
     brightnessctl
-    gnome3.gnome-tweaks
     home-manager
     qemu
   ];
-
-  #environment.loginShellInit = ''
-  #  if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-  #    exec sway
-  #  fi
-  #'';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -129,7 +88,6 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.pipewire.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

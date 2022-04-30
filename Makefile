@@ -7,14 +7,8 @@ machine:
 vm:
 	nixos-rebuild build-vm --flake .#vm
 
-user:
-	home-manager switch --flake .#doos
-
-watch-user:
-	watchexec -w home -e nix "make user"
-
 watch-machine:
-	watchexec -w nixos -e nix "make machine"
+	watchexec -e nix "time nixos-rebuild build --use-remote-sudo --flake .#"
 
 gc:
 	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations 10d

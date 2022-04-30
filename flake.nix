@@ -5,6 +5,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
+    # TODO look into nixos-shell.url = "github:Mic92/nixos-shell";
   };
   outputs = {
     self,
@@ -13,32 +14,25 @@
     nur,
     ...
   } @ attrs: let
+    lib = nixpkgs.lib;
     system = "x86_64-linux";
     username = "doos";
-    mkNixOS = modules:
-      nixpkgs.lib.nixosSystem {
+    mkHost = hostModule:
+      lib.nixosSystem {
         inherit system;
-        inherit modules;
+        specialArgs = {
+          inherit home-manager username;
+        };
+        modules = [
+          (./hosts + "/${hostModule}.nix")
+          home-manager.nixosModules.home-manager
+          {
+            nixpkgs.overlays = [nur.overlay];
+            nixpkgs.config.allowUnfree = true;
+          }
+        ];
       };
   in {
-    nixosConfigurations = {
-      n2 = mkNixOS [
-        ./nixos/n2.nix
-      ];
-      vm = mkNixOS [
-        ./nixos/vm.nix
-      ];
-    };
-    packages.${system}.homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-      configuration = import ./home/home.nix;
-      inherit system username;
-      homeDirectory = "/home/${username}";
-      # Update the state version as needed.
-      # See the changelog here:
-      # https://nix-community.github.io/home-manager/release-notes.html#sec-release-21.11
-      stateVersion = "21.11";
-      # pass through arguments to home.nix:
-      extraSpecialArgs = {inherit nur;};
-    };
+    nixosConfigurations = lib.genAttrs ["n2" "vm"] mkHost;
   };
 }
