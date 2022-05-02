@@ -8,27 +8,41 @@
   home-manager.users.${username} = {
     home.packages = with pkgs; [
       # utils
-      alacritty
-      delta
+      arping
       # barrier
+      bottom
+      choose # like cut
+      delta
+      du-dust
+      duf
+      eternal-terminal
       htop
-      nixos-generators
+      hyperfine
       killall
+      magic-wormhole
+      manix
       neofetch
+      nixos-generators
       peco
       rclone
       tmux
+      tty-share
 
       # dev
       alejandra # nix code formatting
       deno
       gh
       ghc
+      git-filter-repo
+      hyperfine # benchmarking
+      ijq # interactive jq
+      jd-diff-patch # json diff
+      jq
       kube3d
       kubectl
       kubernetes-helm
-      ruby_3_1
       rnix-lsp
+      ruby_3_1
 
       # apps
       bespokesynth
@@ -38,9 +52,11 @@
       koreader
       lazarus
       libreoffice
-      quiterss
-      obsidian # unfree
+      mpv
       obs-studio
+      obsidian # unfree
+      okular
+      quiterss
       signal-desktop
       thunderbird
       vlc

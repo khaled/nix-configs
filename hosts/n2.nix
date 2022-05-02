@@ -9,6 +9,8 @@
     ./base.nix
     ../profiles/zsh.nix
     ../profiles/gnome.nix
+    ../profiles/fonts.nix
+    ../profiles/alacritty.nix
     ../profiles/synergy.nix
     ../profiles/firefox.nix
     ../profiles/chromium.nix
@@ -29,6 +31,7 @@
 
   networking.hostName = "n2"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
