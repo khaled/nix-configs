@@ -1,14 +1,11 @@
-all:
-	$(error Run make machine or make user)
-
 machine:
-	nixos-rebuild switch --use-remote-sudo --flake .#$(filter-out $@,$(MAKECMDGOALS))
+	nixos-rebuild switch --use-remote-sudo --flake .#
 
 vm:
 	nixos-rebuild build-vm --flake .#vm
 
-watch-machine:
-	watchexec -e nix "time nixos-rebuild build --use-remote-sudo --flake .#"
+watch:
+	watchexec -e nix "make"
 
 gc:
 	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations 10d

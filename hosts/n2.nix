@@ -9,6 +9,7 @@
     ./base.nix
     ../profiles/zsh.nix
     ../profiles/gnome.nix
+    # ../profiles/xmonad.nix
     ../profiles/fonts.nix
     ../profiles/alacritty.nix
     ../profiles/synergy.nix
@@ -16,7 +17,13 @@
     ../profiles/chromium.nix
     ../profiles/vscode.nix
     ../profiles/apps.nix
+    ../profiles/rdp.nix
+    ../profiles/virt.nix
   ];
+
+  # services.xserver.desktopManager.plasma5.enable = true;
+  # services.gvfs.enable = true;
+  # services.gnome.at-spi2-core.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   # boot.loader.systemd-boot.enable = true;

@@ -1,9 +1,14 @@
 {
   config,
+  pkgs,
   username,
   ...
 }: {
-  # TODO - this should probably be home-manager config?
+  home-manager.users.${username} = {
+    home.packages = with pkgs; [
+      synergy
+    ];
+  };
   services.synergy = {
     client = {
       enable = true;
