@@ -86,6 +86,7 @@ in {
         simplescreenrecorder
         thunderbird
         vlc
+        zoom-us # unfree
       ]
       ++ haskellPkgs;
   };
